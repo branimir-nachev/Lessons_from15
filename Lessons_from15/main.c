@@ -1,7 +1,9 @@
+#include <bsp.h>
 #include <stdint.h>
 
 #include "tm4c_cmsis.h"
-#include "delay.h"
+
+#define SYS_CLOCK_HZ 16000000U
 
 #define LED_RED   (1U << 1)
 #define LED_BLUE  (1U << 2)
@@ -19,14 +21,14 @@ int main()
     GPIOF_HS->DIR |= (LED_RED | LED_BLUE | LED_GREEN);
     GPIOF_HS->DEN |= (LED_RED | LED_BLUE | LED_GREEN);
 
-    GPIOF_HS->DATA_Bits[LED_BLUE] = LED_BLUE;
+    SysTick->LOAD = SYS_CLOCK_HZ/2U - 1U;
+    SysTick->VAL = 0U;
+    SysTick->CTRL = (1U << 2) | (1U << 1) | 1U;
+
+
+//    GPIOF_HS->DATA_Bits[LED_BLUE] = LED_BLUE;
     while (1) {
-        GPIOF_HS->DATA_Bits[LED_RED] = LED_RED;
-        delay(500000);
 
-        GPIOF_HS->DATA_Bits[LED_RED] = 0;
-
-        delay(500000);
     }
     //return 0;
 }
