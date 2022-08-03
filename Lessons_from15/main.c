@@ -26,7 +26,6 @@ int main()
     SysTick->CTRL = (1U << 2) | (1U << 1) | 1U;
 
 
-//    GPIOF_HS->DATA_Bits[LED_BLUE] = LED_BLUE;
     while (1) {
 
     }
